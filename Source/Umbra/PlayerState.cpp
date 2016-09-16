@@ -53,6 +53,8 @@ void AUmbraCharacter::PlayerState::PhysicsStuff(AUmbraCharacter * Player, float 
 
 	if (!Player->OnTheGround) {
 		Player->CapsuleComponent->AddForce(Player->Gravity, NAME_None, true);
+	} else {
+		Player->FlattenVelocity();
 	}
 }
 
@@ -67,7 +69,25 @@ void AUmbraCharacter::PlayerState::CameraStuff(AUmbraCharacter * Player, float D
 
 void AUmbraCharacter::PlayerState::FaceTargetDirection(AUmbraCharacter * Player, float DeltaTime)
 {
-	FRotator TargetRotation = Player->TargetFacingDirection.Rotation();
-	FQuat NewRotation = FQuat::Slerp(Player->PlayerModel->GetComponentRotation().Quaternion(), Player->TargetFacingDirection.Rotation().Quaternion(), Player->TurningSpeed*DeltaTime);
-	Player->PlayerModel->SetWorldRotation(NewRotation);
+	FQuat TargetRotation = Player->TargetFacingDirection.Rotation().Quaternion();
+	FQuat CurrentRotation = Player->PlayerModel->RelativeRotation.Quaternion();
+
+	int8 reflect = (Player->MovementInput.X >= 0 ? 1 : -1);
+	FQuat Between = FQuat::FindBetween(Player->PlayerModel->GetForwardVector(), Player->TargetFacingDirection);
+	FQuat Inc = FQuat::FindBetween(Player->PlayerModel->GetForwardVector(), (Player->PlayerModel->RelativeRotation + FRotator(0.0f, Player->TurningSpeed*DeltaTime, 0.0f)).Vector());
+
+	FVector dummy1;
+	FVector dummy2;
+	float angle_between, angle_inc;
+	Between.ToAxisAndAngle(dummy1, angle_between);
+	Inc.ToAxisAndAngle(dummy2, angle_inc);
+
+	angle_between = (dummy1.Z >= 0 ? 1 : -1)*FMath::RadiansToDegrees(angle_between);
+	angle_inc = FMath::RadiansToDegrees(angle_inc)*(angle_between >= 0 ? 1 : -1);
+
+	if (FMath::Abs(angle_inc) > FMath::Abs(angle_between)) {
+		Player->PlayerModel->SetWorldRotation(TargetRotation);
+	} else {
+		Player->PlayerModel->AddLocalRotation(FRotator(0.0f, angle_inc, 0.0));
+	}
 }

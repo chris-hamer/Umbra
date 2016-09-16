@@ -148,3 +148,10 @@ void AUmbraCharacter::CameraModeToggle()
 {
 	CameraModeTogglePressed = true;
 }
+
+void AUmbraCharacter::FlattenVelocity()
+{
+	FVector temp = CapsuleComponent->GetPhysicsLinearVelocity();
+	temp.Z = 0.0f;
+	CapsuleComponent->SetPhysicsLinearVelocity(temp);
+}

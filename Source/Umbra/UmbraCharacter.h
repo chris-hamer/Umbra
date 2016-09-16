@@ -54,6 +54,8 @@ public:
 	void CameraFaceForward();
 	void CameraModeToggle();
 
+	void FlattenVelocity();
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -75,7 +77,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings") float GroundAccelRate = 5000.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings") float AirAccelRate = 500.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings") float MaxSpeed = 450.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings") float TurningSpeed = 5.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings") float TurningSpeed = 270.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings") float JumpPower = 500.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings") float CoyoteJumpTime = 0.1f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings") float EyesCloseSpeed = 5.0f;

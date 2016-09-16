@@ -52,6 +52,7 @@ void UUmbraMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Tic
 		enforcementtimer += DeltaTime;
 		toosteep = true;
 	}
+	//GEngine->AddOnScreenDebugMessage(-1, 464568, FColor::Green, FString::SanitizeFloat(onground) + "   zVel: " + FString::SanitizeFloat(PlayerVelocity.Z <= groundvelocity.Z) + "   off: " + FString::SanitizeFloat(offGroundTime > 0.5f) + "   was: " + FString::SanitizeFloat(wasonground));
 	wasonground = onground;
 	onground = false;
 	prevgroundvelocity = groundvelocity;
@@ -86,7 +87,7 @@ void UUmbraMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Tic
 		}
 
 		//if ((PlayerVelocity.Z <= groundvelocity.Z || wasonground)) {
-		if ((PlayerVelocity.Z <= groundvelocity.Z || offGroundTime > 0.2f || wasonground)) {
+		if ((PlayerVelocity.Z <= groundvelocity.Z || offGroundTime > 0.5f || wasonground)) {
 			onground = true;
 			offGroundTime = 0.0f;
 		}
