@@ -65,7 +65,7 @@ public:
 	float DistanceFromImpact;
 	bool overground;
 
-	float grounddetecttfudgefactor;
+	float grounddetecttfudgefactor = 1.0f;
 
 	float playerradius;
 	float playerhalfheight;

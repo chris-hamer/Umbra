@@ -4,6 +4,7 @@
 
 void AUmbraCharacter::PlayerState::Tick(AUmbraCharacter * Player, float DeltaTime)
 {
+	Player->CapsuleComponent->SetPhysicsLinearVelocity(Player->CapsuleComponent->GetPhysicsLinearVelocity() - Player->MovementComponent->groundvelocity);
 	Player->MovementInput = Player->MovementInput.GetClampedToMaxSize(1.0f);
 	Player->Right = FVector::VectorPlaneProject(Player->Camera->GetRightVector(), FVector::UpVector).GetSafeNormal();
 	Player->Forward = FVector::VectorPlaneProject(Player->Camera->GetForwardVector(), FVector::UpVector).GetSafeNormal();
@@ -20,6 +21,7 @@ void AUmbraCharacter::PlayerState::Tick2(AUmbraCharacter * Player, float DeltaTi
 	Player->CameraModeTogglePressed = false;
 
 	Player->MovementComponent->onground = Player->OnTheGround;
+	Player->CapsuleComponent->SetPhysicsLinearVelocity(Player->CapsuleComponent->GetPhysicsLinearVelocity() + Player->MovementComponent->groundvelocity);
 }
 
 void AUmbraCharacter::PlayerState::Abilities(AUmbraCharacter * Player, float DeltaTime)
