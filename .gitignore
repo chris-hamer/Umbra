@@ -8,6 +8,6 @@ Saved
 *.sln
 *.suo
 *.xcodeproj
-shards.VC.db
+*.VC.db
 Content/The_Fountain.umap
 Content/KiteDemo
